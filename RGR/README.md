@@ -1,4 +1,4 @@
-###РГР — «Електронний журнал» (на основі ЛР №1)
+# Проектування бази даних та ознайомлення з базовими операціями СУБД PostgreSQL
 
 **Тема:** Проєктування та реалізація реляційної БД для електронного журналу  
 
@@ -11,3 +11,20 @@
 - `teacher` — викладачі: `teacher_id` PK, `first_name`, `last_name`, `email`.  
 - `subject` — предмети: `subject_id` PK, `name`.  
 - `journal` — записи журналу: `journal_id` PK, `student_id` FK → `student`, `teacher_id` FK → `teacher`, `subject_id` FK → `subject`, `entry_date`, `grade`, `attendance_status`.
+
+## Опис сутностей (коротко)
+- `parents` — батьки: `parents_id` (PK), `first_name`, `last_name`, `phone`, `email`.  
+- `student` — учні: `student_id` (PK), `parents_id` (FK→`parents`), `first_name`, `last_name`, `birth_date`, `class`, `email`.  
+- `teacher` — викладачі: `teacher_id` (PK), `first_name`, `last_name`, `email`.  
+- `subject` — предмети: `subject_id` (PK), `name`.  
+- `journal` — записи журналу: `journal_id` (PK), `student_id` (FK→`student`), `teacher_id` (FK→`teacher`), `subject_id` (FK→`subject`), `entry_date`, `grade`, `attendance_status`.
+
+## Дата-словник (коротко)
+- `student_id` — integer, унікальний ідентифікатор учня.  
+- `parents_id` — integer, ідентифікатор запису в таблиці `parents`.  
+- `entry_date` — date, дата проведення заняття або фіксації оцінки.  
+- `grade` — integer, оцінка (наприклад, 1–12).  
+- `attendance_status` — varchar(30), наприклад `present`, `absent`, `late`.
+
+## Нормалізація та цілісність
+Схема спроектована з урахуванням нормалізації до 3NF (усі атрибути залежать лише від свого PK, відсутні транзитивні та часткові залежності).
